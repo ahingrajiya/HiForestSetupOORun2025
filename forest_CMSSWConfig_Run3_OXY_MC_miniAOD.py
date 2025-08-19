@@ -19,7 +19,7 @@ process.HiForestInfo.info = cms.vstring("HiForest, miniAOD, 150X, mc")
 process.source = cms.Source("PoolSource",
     duplicateCheckMode = cms.untracked.string("noDuplicateCheck"),
     fileNames = cms.untracked.vstring(
-        '/QCD-dijet_Pthat-15_TuneCP5_OO_5p36TeV_pythia8/HINOOSpring25MiniAOD-150X_mcRun3_2025_forOO_realistic_v7-v2/MINIAODSIM'
+        '/store/mc/HINOOSpring25MiniAOD/QCD-dijet_Pthat-15_TuneCP5_OO_5p36TeV_pythia8/MINIAODSIM/150X_mcRun3_2025_forOO_realistic_v7-v2/90000/22790444-8b31-47cf-80a5-5a80f13d5af9.root'
     )
 )
 
