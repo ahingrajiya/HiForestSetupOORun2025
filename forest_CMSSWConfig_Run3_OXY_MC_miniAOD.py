@@ -99,6 +99,7 @@ process.load('L1Trigger.L1TNtuples.l1MetFilterRecoTree_cfi')
 
 ################################
 # electrons, photons, muons
+process.load('HeavyIonsAnalysis.EGMAnalysis.ggHiNtuplizer_cfi')
 process.ggHiNtuplizer.doGenParticles = cms.bool(True)
 ################################
 # jet reco sequence
