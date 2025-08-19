@@ -19,16 +19,13 @@ process.HiForestInfo.info = cms.vstring("HiForest, miniAOD, 150X, mc")
 process.source = cms.Source("PoolSource",
     duplicateCheckMode = cms.untracked.string("noDuplicateCheck"),
     fileNames = cms.untracked.vstring(
-        '/store/user/srdas/Hijing_HeO_5362GeV_NoPU_100kEvents/250603_Hijing_HeO_5362GeV_NoPU_100kEvents_ppReco_00/250604_045759/0000/step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PAT_11.root'
-    ),
-    secondaryFileNames = cms.untracked.vstring(
-        '/store/user/srdas/Hijing_HeO_5362GeV_NoPU_100kEvents/250603_Hijing_HeO_5362GeV_NoPU_100kEvents_DigiRaw_01/250604_031449/0000/step2_DIGI_L1_DIGI2RAW_HLT_20.root'
-    ),
+        '/QCD-dijet_Pthat-15_TuneCP5_OO_5p36TeV_pythia8/HINOOSpring25MiniAOD-150X_mcRun3_2025_forOO_realistic_v7-v2/MINIAODSIM'
+    )
 )
 
 # number of events to process, set to -1 to process all events
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(-1)
+    input = cms.untracked.int32(1000)
     )
 
 ###############################################################################
@@ -102,20 +99,14 @@ process.load('L1Trigger.L1TNtuples.l1MetFilterRecoTree_cfi')
 
 ################################
 # electrons, photons, muons
-#process.load('HeavyIonsAnalysis.EGMAnalysis.ggHiNtuplizer_cfi')
-#process.ggHiNtuplizer.doGenParticles = cms.bool(True)
-#process.ggHiNtuplizer.doMuons = cms.bool(False)
-process.load("TrackingTools.TransientTrack.TransientTrackBuilder_cfi")
+process.ggHiNtuplizer.doGenParticles = cms.bool(True)
 ################################
 # jet reco sequence
 process.load('HeavyIonsAnalysis.JetAnalysis.akCs4PFJetSequence_pponPbPb_mc_cff')
+process.load('HeavyIonsAnalysis.JetAnalysis.ak4PFJetSequence_ppref_mc_cff')
 ################################
 # tracks
 process.load("HeavyIonsAnalysis.TrackAnalysis.TrackAnalyzers_cff")
-#muons
-process.load("HeavyIonsAnalysis.MuonAnalysis.unpackedMuons_cfi")
-process.load("HeavyIonsAnalysis.MuonAnalysis.muonAnalyzer_cfi")
-process.muonAnalyzer.doGen = cms.bool(True)
 ###############################################################################
 
 #########################
@@ -147,6 +138,20 @@ process.forest = cms.Path(
 #########################
 # Event Selection -> add the needed filters here
 #########################
+
+addR4Jets = True
+    if addR4Jets :
+        # Recluster using an alias "0" in order not to get mixed up with the default AK4 collections
+        process.jetsR4 = cms.Sequence()
+        jetName = 'akCs0PF'
+        setupHeavyIonJets(jetName, process.jetsR4, process, isMC = 1, radius = 0.40, JECTag = 'AK4PF', doFlow = False, matchJets = matchJets, doWTA= True)
+        process.akCs0PFpatJetCorrFactors.levels = ['L2Relative', 'L3Absolute']
+        process.akCs4PFJetAnalyzer.jetTag = jetName + 'patJets'
+        process.akCs4PFJetAnalyzer.jetName = jetName
+        process.akCs4PFJetAnalyzer.matchJets = matchJets
+        process.akCs4PFJetAnalyzer.matchTag = 'ak4PFMatchingFor' + jetName + 'patJets'
+        process.forest += process.extraJetsMC * process.jetsR4 * process.akCs4PFJetAnalyzer
+
 
 process.load('HeavyIonsAnalysis.EventAnalysis.collisionEventSelection_cff')
 process.pclusterCompatibilityFilter = cms.Path(process.clusterCompatibilityFilter)
