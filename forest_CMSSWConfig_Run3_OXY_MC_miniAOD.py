@@ -140,7 +140,8 @@ process.forest = cms.Path(
 #########################
 
 addR4Jets = True
-    if addR4Jets :
+    
+if addR4Jets :
         # Recluster using an alias "0" in order not to get mixed up with the default AK4 collections
         process.jetsR4 = cms.Sequence()
         jetName = 'akCs0PF'
