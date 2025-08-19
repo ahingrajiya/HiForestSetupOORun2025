@@ -142,6 +142,8 @@ process.forest = cms.Path(
 
 addR4Jets = True
     
+process.load("HeavyIonsAnalysis.JetAnalysis.extraJets_cff")
+from HeavyIonsAnalysis.JetAnalysis.clusterJetsFromMiniAOD_cff import setupHeavyIonJets
 if addR4Jets :
         # Recluster using an alias "0" in order not to get mixed up with the default AK4 collections
         process.jetsR4 = cms.Sequence()
