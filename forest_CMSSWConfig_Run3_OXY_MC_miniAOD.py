@@ -148,12 +148,13 @@ if addR4Jets :
         # Recluster using an alias "0" in order not to get mixed up with the default AK4 collections
         process.jetsR4 = cms.Sequence()
         jetName = 'akCs0PF'
-        setupHeavyIonJets(jetName, process.jetsR4, process, isMC = 1, radius = 0.40, JECTag = 'AK4PF', doFlow = False, matchJets = True, doWTA= True)
+        setupHeavyIonJets(jetName, process.jetsR4, process, isMC = 1, radius = 0.40, JECTag = 'AK4PF', doFlow = False, matchJets = True)
         process.akCs0PFpatJetCorrFactors.levels = ['L2Relative', 'L3Absolute']
         process.akCs4PFJetAnalyzer.jetTag = jetName + 'patJets'
         process.akCs4PFJetAnalyzer.jetName = jetName
         process.akCs4PFJetAnalyzer.matchJets = matchJets
         process.akCs4PFJetAnalyzer.matchTag = 'ak4PFMatchingFor' + jetName + 'patJets'
+        process.akCs4PFJetAnalyzer.doWTARecluster = True
         process.forest += process.extraJetsMC * process.jetsR4 * process.akCs4PFJetAnalyzer
 
 
