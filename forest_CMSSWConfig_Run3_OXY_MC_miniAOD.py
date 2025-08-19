@@ -129,8 +129,9 @@ process.forest = cms.Path(
     process.trackSequencePP +
     process.particleFlowAnalyser +
     process.hiEvtAnalyzer +
-    process.HiGenParticleAna
-#    process.ggHiNtuplizer +
+    process.HiGenParticleAna +
+    process.ggHiNtuplizer +
+    process.jetanalyzer
 #    process.zdcSequencePbPb +
 #    process.unpackedMuons +
 #    process.muonAnalyzer
@@ -149,7 +150,6 @@ if addR4Jets :
         process.jetsR4 = cms.Sequence()
         jetName = 'akCs0PF'
         setupHeavyIonJets(jetName, process.jetsR4, process, isMC = 1, radius = 0.40, JECTag = 'AK4PF', doFlow = False, matchJets = True)
-        process.akCs0PFpatJetCorrFactors.levels = ['L2Relative', 'L3Absolute']
         process.akCs4PFJetAnalyzer.jetTag = jetName + 'patJets'
         process.akCs4PFJetAnalyzer.jetName = jetName
         process.akCs4PFJetAnalyzer.matchJets = True
