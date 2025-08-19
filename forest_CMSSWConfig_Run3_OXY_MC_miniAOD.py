@@ -152,7 +152,7 @@ if addR4Jets :
         process.akCs0PFpatJetCorrFactors.levels = ['L2Relative', 'L3Absolute']
         process.akCs4PFJetAnalyzer.jetTag = jetName + 'patJets'
         process.akCs4PFJetAnalyzer.jetName = jetName
-        process.akCs4PFJetAnalyzer.matchJets = matchJets
+        process.akCs4PFJetAnalyzer.matchJets = True
         process.akCs4PFJetAnalyzer.matchTag = 'ak4PFMatchingFor' + jetName + 'patJets'
         process.akCs4PFJetAnalyzer.doWTARecluster = True
         process.forest += process.extraJetsMC * process.jetsR4 * process.akCs4PFJetAnalyzer
